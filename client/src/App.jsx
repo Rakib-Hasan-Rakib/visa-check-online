@@ -1,17 +1,18 @@
 import { Outlet } from "react-router-dom";
 import Navbar from "./components/navbar/Navbar";
-import Headroom from "react-headroom";
+import Container from "./components/Container";
 
 function App() {
   return (
     <>
-      {/* <Headroom>
-        <Navbar />
-      </Headroom> */}
       <div className="fixed z-50">
         <Navbar />
       </div>
-      <Outlet />
+      <Container>
+        <div className="min-h-[calc(100vh-200px)] pt-20">
+          <Outlet />
+        </div>
+      </Container>
     </>
   );
 }

@@ -2,6 +2,7 @@ import { createBrowserRouter } from "react-router-dom";
 import App from "../App";
 import ErrorPage from "../components/ErrorPage";
 import Home from "../pages/home/Home";
+import Check from "../pages/visaCheck/Check";
 
 const Route = createBrowserRouter([
   {
@@ -15,10 +16,10 @@ const Route = createBrowserRouter([
       //   path: "/uploadData",
       //   element: <Upload />,
       // },
-      // {
-      //   path: "/check",
-      //   element: <Check />,
-      // },
+      {
+        path: "/check",
+        element: <Check />,
+      },
       // {
       //   path: "/check/:passportNum",
       //   element: <CheckResult />,
