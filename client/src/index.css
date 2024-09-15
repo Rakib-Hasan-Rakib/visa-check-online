@@ -1,3 +1,10 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.btn_one{
+    @apply bg-blue-500 px-4 py-1 rounded-md font-semibold
+}
+.btn_one:hover{
+    @apply bg-blue-600 hover:duration-500 hover:ease-linear
+}
