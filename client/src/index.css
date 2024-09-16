@@ -11,7 +11,9 @@
 }
 
 .input-box {
-    /* border: 1px solid #09e5e5; */
     border-radius: 5px;
     @apply w-full px-2 py-1 focus:outline-none text-black border border-blue-600
+}
+.section_title{
+    @apply text-2xl md:text-4xl lg:text-5xl text-center text-blue-600 font-bold capitalize mt-8 mb-4 lg:mt-16 lg:mb-8
 }

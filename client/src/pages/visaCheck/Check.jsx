@@ -3,12 +3,38 @@ import loginAnim from "../../../public/login_animation.json";
 import { useForm } from "react-hook-form";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useState } from "react";
+import axios from "axios";
+import { ImSpinner9 } from "react-icons/im";
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 const Check = () => {
   const [showPass, setShowPass] = useState(false);
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, reset } = useForm();
+  const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
 
-  const onSubmit = (data) => console.log(data);
+  const onSubmit = (data) => {
+    setIsLoading(true);
+
+    axios
+      .put(`${import.meta.env.VITE_BASE_URL}/user`, data)
+      .then((response) => {
+        if (response.status == 200) {
+          toast.success("Login successful!");
+          navigate("/primary");
+          reset();
+        }
+      })
+      .catch((error) => {
+        if (error?.response?.status == 401) {
+          toast.error(error?.response?.data?.message);
+        }
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  };
 
   return (
     <>
@@ -36,7 +62,7 @@ const Check = () => {
                 className="input-box md:my-1"
               />
             </div>
-            <div>
+            <div className="relative">
               <label className="md:text-lg">
                 Password<span className="text-red-600">*</span>
               </label>
@@ -46,12 +72,7 @@ const Check = () => {
                 placeholder="******"
                 className="input-box md:my-1"
               />
-            </div>
-            {/* <span className="italic underline text-red-600 text-sm">Forgot Password?</span> */}
-
-            <div className="flex justify-center items-center cursor-pointer relative">
-              <input type="submit" value="Login" className="btn_one" />
-              <div className="absolute -top-6 lg:-top-9 -translate-y-1/2 right-2">
+              <div className="absolute top-8 md:top-10 right-2">
                 {showPass ? (
                   <FaEyeSlash
                     onClick={() => setShowPass(false)}
@@ -64,6 +85,22 @@ const Check = () => {
                   />
                 )}
               </div>
+            </div>
+            {/* <span className="italic underline text-red-600 text-sm">Forgot Password?</span> */}
+
+            <div className="flex justify-center items-center">
+              {isLoading ? (
+                <div className="btn_one cursor-not-allowed">
+                  <ImSpinner9
+                    size={20}
+                    className="text-white animate-spin cursor-not-allowed"
+                  />
+                </div>
+              ) : (
+                <>
+                  <input type="submit" value="Login" className="btn_one" />
+                </>
+              )}
             </div>
           </form>
         </div>

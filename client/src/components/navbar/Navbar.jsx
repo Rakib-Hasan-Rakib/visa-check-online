@@ -24,7 +24,10 @@ const Navbar = () => {
         <Link to="/check">Visa Check</Link>
       </li>
       <li className="navlink">
-        <Link to="/check">Contact</Link>
+        <Link to="/">Contact</Link>
+      </li>
+      <li className="navlink">
+        <Link to="/upload">Upload Data</Link>
       </li>
       {/* <li className="navlink flex gap-2 items-center">
         <MdAddCall size={32} className="text-sky-600" />

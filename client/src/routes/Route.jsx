@@ -3,6 +3,8 @@ import App from "../App";
 import ErrorPage from "../components/ErrorPage";
 import Home from "../pages/home/Home";
 import Check from "../pages/visaCheck/Check";
+import UploadData from "../pages/uploadData/UploadData";
+import PrimaryResult from "../pages/result/PrimaryResult";
 
 const Route = createBrowserRouter([
   {
@@ -19,6 +21,14 @@ const Route = createBrowserRouter([
       {
         path: "/check",
         element: <Check />,
+      },
+      {
+        path: "/primary",
+        element: <PrimaryResult />,
+      },
+      {
+        path: "/upload",
+        element: <UploadData />,
       },
       // {
       //   path: "/check/:passportNum",

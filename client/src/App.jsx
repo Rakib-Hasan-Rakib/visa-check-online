@@ -1,6 +1,7 @@
 import { Outlet } from "react-router-dom";
 import Navbar from "./components/navbar/Navbar";
 import Container from "./components/Container";
+import Footer from "./components/Footer";
 
 function App() {
   return (
@@ -8,11 +9,10 @@ function App() {
       <div className="fixed z-50">
         <Navbar />
       </div>
-      <Container>
-        <div className="min-h-[calc(100vh-200px)] pt-20">
-          <Outlet />
-        </div>
-      </Container>
+      <div className="min-h-[calc(100vh-200px)] pt-12">
+        <Outlet />
+      </div>
+      <Footer />
     </>
   );
 }
