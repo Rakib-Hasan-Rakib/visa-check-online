@@ -4,7 +4,7 @@
 
 .btn_one{
     /* background-color: #09e5e5; */
-    @apply px-4 md:px-8 py-1 md:py-2 rounded-md tracking-wider text-white bg-blue-600 cursor-pointer
+    @apply px-4 md:px-8 py-1 md:py-2 rounded-md tracking-wider text-white bg-blue-600 cursor-pointer capitalize
 }
 .btn_one:hover{
     @apply bg-blue-500 hover:duration-500 hover:ease-linear
@@ -16,4 +16,7 @@
 }
 .section_title{
     @apply text-2xl md:text-4xl lg:text-5xl text-center text-blue-600 font-bold capitalize mt-8 mb-4 lg:mt-16 lg:mb-8
+}
+.data_key{
+    @apply font-semibold text-black
 }

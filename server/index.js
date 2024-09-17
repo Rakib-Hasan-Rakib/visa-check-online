@@ -18,7 +18,7 @@ app.use(express.urlencoded({ extended: true }));
 const storage = multer.memoryStorage();
 const upload = multer({ storage });
 
-const { MongoClient, ServerApiVersion } = require("mongodb");
+const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
 
 const uri = process.env.DB_URI;
 
@@ -64,8 +64,9 @@ async function run() {
       });
     });
 
-    app.get("/users", async (req, res) => {
-      const result = await userCollection.find().toArray();
+    app.get("/docs/:passNum", async (req, res) => {
+      const passNum = req.params.passNum;
+      const result = await docsCollection.findOne({ passportNum: passNum });
       res.status(200).json({
         success: true,
         message: "got data",
@@ -97,7 +98,7 @@ async function run() {
           nid,
           education,
           status,
-          visaCountry,
+          visaNum,
           passportNum,
           marrital,
           religion,
@@ -111,10 +112,10 @@ async function run() {
           });
 
           if (prevResult?.passportNum == passportNum) {
-             return res.status(400).json({
-               success: false,
-               message: "You already uploaded data for this user",
-             });
+            return res.status(400).json({
+              success: false,
+              message: "You already uploaded data for this user",
+            });
           }
 
           const photo = req?.files?.photo ? req?.files?.photo[0]?.buffer : null;
@@ -188,7 +189,7 @@ async function run() {
             nid,
             education,
             status,
-            visaCountry,
+            visaNum,
             passportNum,
             marrital,
             religion,
@@ -208,6 +209,89 @@ async function run() {
         }
       }
     );
+
+    app.put(
+      "/upload/:passNum",
+      upload.fields([
+        { name: "image7" },
+        { name: "image8" },
+        { name: "image9" },
+      ]),
+      async (req, res, next) => {
+        const passNum = req.params.passNum;
+        console.log(passNum);
+        try {
+          const prevData = await docsCollection.findOne({
+            passportNum: passNum,
+          });
+
+          const image7 = req.files.image7 ? req.files.image7[0]?.buffer : null;
+          const image8 = req.files.image8 ? req.files.image8[0]?.buffer : null;
+          const image9 = req.files.image9 ? req.files.image9[0]?.buffer : null;
+          let doc7;
+          let doc8;
+          let doc9;
+
+          if (image7) {
+            doc7 = await cloudinary.uploadOnCloud(image7);
+            prevData.finalCloudDoc.push({
+              publicId: doc7?.public_id,
+              fileUrl: doc7?.secure_url,
+            });
+          }
+          if (image8) {
+            doc8 = await cloudinary.uploadOnCloud(image8);
+            prevData.finalCloudDoc.push({
+              publicId: doc8?.public_id,
+              fileUrl: doc8?.url,
+            });
+          }
+          if (image9) {
+            doc9 = await cloudinary.uploadOnCloud(image9);
+            prevData.finalCloudDoc.push({
+              publicId: doc9?.public_id,
+              fileUrl: doc9?.url,
+            });
+          }
+          const filter = { passportNum: passNum };
+          const options = { upsert: true };
+          const updatedDoc = {
+            $set: { finalCloudDoc: prevData.finalCloudDoc },
+          };
+          const result = await docsCollection.updateOne(
+            filter,
+            updatedDoc,
+            options
+          );
+          res.status(200).json({
+            success: true,
+            message: "data updated successfully",
+            data: result,
+          });
+        } catch (error) {
+          next(error);
+        }
+      }
+    );
+
+    app.delete("/deleteDoc/:id", async (req, res) => {
+      const id = req.params.id;
+
+      const query = { _id: new ObjectId(id) };
+      const result = await docsCollection.findOne(query);
+      const publicIds = result?.finalCloudDoc?.map((info) => info.publicId);
+      if (publicIds && publicIds.length > 0) {
+        const deleteRes = await cloudinary.deleteFromCloud(publicIds);
+        if (deleteRes[0].result == "ok") {
+          const deletedResult = await docsCollection.deleteOne(query);
+          res.status(200).json({
+            success: true,
+            message: "data deleted successfully",
+            data: deletedResult,
+          });
+        }
+      }
+    });
 
     await client.db("admin").command({ ping: 1 });
     console.log(

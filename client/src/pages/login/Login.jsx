@@ -1,64 +1,63 @@
-import Lottie from "lottie-react";
-import loginAnim from "../../../public/login_animation.json";
+import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { useState } from "react";
-import axios from "axios";
-import { ImSpinner9 } from "react-icons/im";
-import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import Container from "../../components/Container";
+import toast from "react-hot-toast";
+import { AuthContext } from "../../providers/AuthProvider";
+import { FcGoogle } from "react-icons/fc";
 
-const Check = () => {
+const Login = () => {
   const [showPass, setShowPass] = useState(false);
   const { register, handleSubmit, reset } = useForm();
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
+  const { signInWithGoogle, signIn } = useContext(AuthContext);
 
   const onSubmit = (data) => {
-    setIsLoading(true);
+    console.log(data);
+    signIn(data?.email, data?.password)
+        .then((result) => {
+          console.log(result)
+        navigate("/", { replace: true });
+        toast.success("you logged in successfully");
+      })
+      .catch((err) => {
+        //   setLoading(false);
+        toast.error(err.message);
+      });
+  };
 
-    axios
-      .put(`${import.meta.env.VITE_BASE_URL}/user`, data)
-      .then((response) => {
-        if (response.status == 200) {
-          toast.success("Login successful!");
-          navigate(`/primary/${data?.passport}`);
-          reset();
-        }
+  const handleGoogleSignIn = () => {
+    signInWithGoogle()
+      .then((result) => {
+        navigate("/", { replace: true });
+        console.log(result);
+        toast.success("you logged in successfully");
       })
-      .catch((error) => {
-        if (error?.response?.status == 401) {
-          toast.error(error?.response?.data?.message);
-        }
-      })
-      .finally(() => {
-        setIsLoading(false);
+      .catch((err) => {
+        // setLoading(false);
+        toast.error(err.message);
       });
   };
 
   return (
     <>
-      <div className="w-full bg-gry-400 flex flex-col lg:flex-row-reverse items-center gap-4 lg:gap-8">
-        <Lottie
-          animationData={loginAnim}
-          loop={true}
-          className="w-60 basis-1/2"
-        />
-        <div>
-          <h2 className="text-center text-xl lg:text-3xl xl:text-4xl capitalize font-semibold my-4 lg:my-8  text-blue-600">
-            check your visa status
-          </h2>
+      <Container>
+        <h1 className="section_title">Please login here</h1>
+        <div className="w-full md:w-3/5 lg:w-2/5 2xl:1/5 mx-auto">
           <form
             onSubmit={handleSubmit(onSubmit)}
             className="space-y-1 lg:space-y-4"
           >
             <div>
               <label className="md:text-lg">
-                Passport Number<span className="text-red-600">*</span>
+                Email Address<span className="text-red-600">*</span>
               </label>
               <input
-                {...register("passport")}
-                placeholder="Passport Number"
+                type="email"
+                {...register("email")}
+                placeholder="Email Address"
                 className="input-box md:my-1"
               />
             </div>
@@ -103,9 +102,22 @@ const Check = () => {
               )}
             </div>
           </form>
+          <div className="flex items-center gap-3 my-2 md:my-4">
+            <hr className="w-full" />
+            <span>or</span>
+            <hr className="w-full" />
+          </div>
+          <div
+            onClick={handleGoogleSignIn}
+            className="btn-two flex justify-center my-2 items-center rounded-md cursor-pointer border border-blue-600 py-1"
+          >
+            <FcGoogle size={32} />
+
+            <p>Continue with Google</p>
+          </div>
         </div>
-      </div>
+      </Container>
     </>
   );
 };
-export default Check;
+export default Login;

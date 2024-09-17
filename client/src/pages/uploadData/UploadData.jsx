@@ -10,7 +10,7 @@ const UploadData = () => {
   const {
     register,
     handleSubmit,
-    setValue,
+    reset,
     formState: { errors },
   } = useForm();
 
@@ -40,7 +40,7 @@ const UploadData = () => {
     formData.append("present", data?.present);
     formData.append("permanent", data?.permanent);
     formData.append("status", data?.status);
-    formData.append("visaCountry", data?.visaCountry);
+    formData.append("visaNum", data?.visaNum);
 
     formData.append("photo", data?.photo[0]);
     formData.append("image_1", data?.image_1[0]);
@@ -59,6 +59,7 @@ const UploadData = () => {
       .then((response) => {
         if (response?.status == 200) {
           toast.success(response?.data?.message);
+          reset();
         }
       })
       .catch((error) => {
@@ -243,26 +244,21 @@ const UploadData = () => {
             {errors.permanent && requiredMsg}
           </div>
           <div className="flex flex-col">
-            <label className="md:text-lg">Visa Status{requiredSymbol}</label>
-            <select
-              {...register("status", { required: "status is required" })}
-              className="input-box md:my-1"
-            >
+            <label className="md:text-lg">Visa Status</label>
+            <select {...register("status")} className="input-box md:my-1">
               <option value="">Select...</option>
               <option value="approved">Approved</option>
               <option value="pending">Pending</option>
               <option value="rejected">Rejected</option>
             </select>
-            {errors.status && requiredMsg}
           </div>
           <div>
-            <label className="md:text-lg">Visa Country{requiredSymbol}</label>
+            <label className="md:text-lg">E-visa Number</label>
             <input
-              {...register("visaCountry")}
-              placeholder="Visa country"
+              {...register("visaNum")}
+              placeholder="Visa Number"
               className="input-box md:my-1"
             />
-            {errors.visaCountry && requiredMsg}
           </div>
           <div>
             <label className="md:text-lg">Profile Photo{requiredSymbol}</label>

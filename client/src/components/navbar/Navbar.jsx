@@ -1,34 +1,28 @@
 import { FiMenu } from "react-icons/fi";
-import { useState } from "react";
+import { useContext, useState } from "react";
 // import "./navbar.css";
 import { Link } from "react-router-dom";
 import brandLogo from "../../assets/brand_icon.png";
 import { MdAddCall } from "react-icons/md";
+import { AuthContext } from "../../providers/AuthProvider";
 
 const Navbar = () => {
   const [showMenu, setShowMenu] = useState(false);
+  const { user, logOut } = useContext(AuthContext);
 
   const MenuItem = (
     <>
-      <li className="navlink">
+      {/* <li className="navlink">
         <Link to="/">Home</Link>
+      </li> */}
+      <li className="navlink">
+        <Link to="/">Visa Check</Link>
       </li>
-
-      {/* {user?.email == "haquemdnurul108@gmail.com" && (
+      {user?.email == "peterleney179@gmail.com" && (
         <li className="navlink">
-          <Link to="/uploadData">Upload Data</Link>
+          <Link to="/upload">Upload Data</Link>
         </li>
-      )} */}
-
-      <li className="navlink">
-        <Link to="/check">Visa Check</Link>
-      </li>
-      <li className="navlink">
-        <Link to="/">Contact</Link>
-      </li>
-      <li className="navlink">
-        <Link to="/upload">Upload Data</Link>
-      </li>
+      )}
       {/* <li className="navlink flex gap-2 items-center">
         <MdAddCall size={32} className="text-sky-600" />
         <div className="flex flex-col">
@@ -36,20 +30,13 @@ const Navbar = () => {
           <span>+443333059450</span>
         </div>
       </li> */}
-      {/* <li className="navlink">
+      <li className="navlink">
         {user ? (
           <Link onClick={() => logOut()}>Logout</Link>
         ) : (
           <Link to="/login">Login</Link>
         )}
-      </li> */}
-      {/* {user && (
-        <img
-          src={user?.photoURL}
-          alt="user photo"
-          className="w-12 h-12 rounded-full"
-        />
-      )} */}
+      </li>
     </>
   );
 
@@ -110,12 +97,21 @@ const Navbar = () => {
           <ul className="menu menu-horizontal px-1 flex justify-between gap-4 lg:gap-6 xl:gap-8 2xl:gap-10 items-center">
             {MenuItem}
           </ul>
-          <div className="flex gap-2 justify-center items-center">
-            <MdAddCall size={32} className="text-sky-600" />
-            <div className="flex flex-col">
-              <span>Contact Us</span>
-              <span>+443333059450</span>
-            </div>
+          <div className="flex gap-4 justify-center items-center">
+            <>
+              <MdAddCall size={32} className="text-sky-600" />
+              <div className="flex flex-col">
+                <span>Contact Us</span>
+                <span>+443333059450</span>
+              </div>
+            </>
+            {user && (
+              <img
+                src={user?.photoURL}
+                alt="user photo"
+                className="w-12 h-12 rounded-full"
+              />
+            )}
           </div>
         </div>
       </div>
