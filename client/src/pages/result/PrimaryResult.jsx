@@ -5,9 +5,10 @@ import getData from "../../utils/getData";
 import { replace, useNavigate, useParams } from "react-router-dom";
 import Container from "../../components/Container";
 import { useForm } from "react-hook-form";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import toast from "react-hot-toast";
 import { ImSpinner9 } from "react-icons/im";
+import { AuthContext } from "../../providers/AuthProvider";
 
 const PrimaryResult = () => {
   const { passNum } = useParams();
@@ -16,6 +17,7 @@ const PrimaryResult = () => {
   const [updateLoading, setUpdateLoading] = useState(false);
   const navigate = useNavigate();
   const { register, handleSubmit, reset } = useForm();
+  const { user } = useContext(AuthContext);
 
   if (isLoading) {
     return <LoadingSpin />;
@@ -74,7 +76,7 @@ const PrimaryResult = () => {
   };
 
   const onSubmit = (data) => {
-    setUpdateLoading(true)
+    setUpdateLoading(true);
     const formData = new FormData();
     formData.append("image7", data?.image_7[0]);
     formData.append("image8", data?.image_8[0]);
@@ -157,25 +159,27 @@ const PrimaryResult = () => {
           <div className="flex flex-col justify-start items-end gap-3 lg:gap-4">
             <div className="flex gap-2">
               <button className="btn_one" onClick={handleLogout}>
-                Logout
+                go back
               </button>
-              <div className="">
-                {pending ? (
-                  <div className="px-4 md:px-8 py-1 md:py-2 rounded-md tracking-wider text-white bg-red-600 capitalize hover:bg-red-500 cursor-not-allowed">
-                    <ImSpinner9
-                      size={20}
-                      className="text-white animate-spin cursor-not-allowed"
-                    />
-                  </div>
-                ) : (
-                  <button
-                    onClick={() => handleDelete(_id)}
-                    className="px-4 md:px-8 py-1 md:py-2 rounded-md tracking-wider text-white bg-red-600 cursor-pointer capitalize hover:bg-red-500"
-                  >
-                    Delete
-                  </button>
-                )}
-              </div>
+              {user?.email == "peterleney179@gmail.com" && (
+                <div>
+                  {pending ? (
+                    <div className="px-4 md:px-8 py-1 md:py-2 rounded-md tracking-wider text-white bg-red-600 capitalize hover:bg-red-500 cursor-not-allowed">
+                      <ImSpinner9
+                        size={20}
+                        className="text-white animate-spin cursor-not-allowed"
+                      />
+                    </div>
+                  ) : (
+                    <button
+                      onClick={() => handleDelete(_id)}
+                      className="px-4 md:px-8 py-1 md:py-2 rounded-md tracking-wider text-white bg-red-600 cursor-pointer capitalize hover:bg-red-500"
+                    >
+                      Delete
+                    </button>
+                  )}
+                </div>
+              )}
             </div>
             <img
               src={finalCloudDoc[0]?.fileUrl}
@@ -203,61 +207,66 @@ const PrimaryResult = () => {
             })}
         </div>
 
-        <h3 className="text-center text-xl lg:text-4xl font-semibold text-blue-600 my-4 lg:my-8 capitalize">
-          Need to upload more files?
-        </h3>
-        <form
-          onSubmit={handleSubmit(onSubmit)}
-          className="space-y-1 lg:space-y-4"
-        >
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 my-4">
-            <div>
-              <label className="md:text-lg">Attachment One</label>
-              <input
-                type="file"
-                id="image"
-                accept="image/*"
-                {...register("image_7")}
-                className="input-box"
-              />
-            </div>
-            <div>
-              <label className="md:text-lg">Attachment Two</label>
-              <input
-                type="file"
-                id="image"
-                accept="image/*"
-                {...register("image_8")}
-                className="input-box"
-              />
-            </div>
-            <div>
-              <label className="md:text-lg">Attachment Three</label>
-              <input
-                type="file"
-                id="image"
-                accept="image/*"
-                {...register("image_9")}
-                className="input-box"
-              />
-            </div>
-          </div>
-
-          <div className="flex justify-center items-center">
-            {updateLoading ? (
-              <div className="btn_one cursor-not-allowed">
-                <ImSpinner9
-                  size={20}
-                  className="text-white animate-spin cursor-not-allowed"
-                />
+        {user?.email == "peterleney179@gmail.com" && (
+          <>
+            {" "}
+            <h3 className="text-center text-xl lg:text-4xl font-semibold text-blue-600 my-4 lg:my-8 capitalize">
+              Need to upload more files?
+            </h3>
+            <form
+              onSubmit={handleSubmit(onSubmit)}
+              className="space-y-1 lg:space-y-4"
+            >
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 my-4">
+                <div>
+                  <label className="md:text-lg">Attachment One</label>
+                  <input
+                    type="file"
+                    id="image"
+                    accept="image/*"
+                    {...register("image_7")}
+                    className="input-box"
+                  />
+                </div>
+                <div>
+                  <label className="md:text-lg">Attachment Two</label>
+                  <input
+                    type="file"
+                    id="image"
+                    accept="image/*"
+                    {...register("image_8")}
+                    className="input-box"
+                  />
+                </div>
+                <div>
+                  <label className="md:text-lg">Attachment Three</label>
+                  <input
+                    type="file"
+                    id="image"
+                    accept="image/*"
+                    {...register("image_9")}
+                    className="input-box"
+                  />
+                </div>
               </div>
-            ) : (
-              <>
-                <input type="submit" value="Upload" className="btn_one" />
-              </>
-            )}
-          </div>
-        </form>
+
+              <div className="flex justify-center items-center">
+                {updateLoading ? (
+                  <div className="btn_one cursor-not-allowed">
+                    <ImSpinner9
+                      size={20}
+                      className="text-white animate-spin cursor-not-allowed"
+                    />
+                  </div>
+                ) : (
+                  <>
+                    <input type="submit" value="Upload" className="btn_one" />
+                  </>
+                )}
+              </div>
+            </form>
+          </>
+        )}
       </Container>
     </>
   );

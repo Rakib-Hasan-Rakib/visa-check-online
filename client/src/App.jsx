@@ -9,8 +9,10 @@ function App() {
       <div className="fixed z-50">
         <Navbar />
       </div>
-      <div className="min-h-[calc(100vh-200px)] pt-12">
-        <Outlet />
+      <div className="min-h-[calc(100vh-200px)] pt-16">
+        <Container>
+          <Outlet />
+        </Container>
       </div>
       <Footer />
     </>
