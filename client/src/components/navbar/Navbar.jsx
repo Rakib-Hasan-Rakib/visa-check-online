@@ -11,7 +11,13 @@ const Navbar = () => {
   const MenuItem = (
     <>
       <li className="navlink">
-        <Link to="/">Visa Check</Link>
+        <Link to="/">Home</Link>
+      </li>
+      <li className="navlink">
+        <Link to="/check">Visa Check</Link>
+      </li>
+      <li className="navlink">
+        <Link to="/contact">Contact</Link>
       </li>
       {user?.email == "peterleney179@gmail.com" && (
         <li className="navlink">

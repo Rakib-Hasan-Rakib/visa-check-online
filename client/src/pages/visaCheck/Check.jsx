@@ -70,7 +70,7 @@ const Check = () => {
                   Passport Number<span className="text-red-600">*</span>
                 </label>
                 <input
-                  {...register("passport")}
+                  {...register("passport", { required: true })}
                   placeholder="Passport Number"
                   className="input-box md:my-1"
                 />
