@@ -64,6 +64,23 @@ async function run() {
       });
     });
 
+    app.post(
+      "/userImage",
+      upload.fields([{ name: "userPhoto" }]),
+      async (req, res) => {
+        const photo = req?.files?.userPhoto
+          ? req?.files?.userPhoto[0]?.buffer
+          : null;
+        let uploadedPhoto = await cloudinary.uploadOnCloud(photo);
+        const photoUrl = uploadedPhoto?.secure_url;
+        res.status(200).json({
+          success: true,
+          message: "got data",
+          data: photoUrl,
+        });
+      }
+    );
+
     app.get("/docs/:passNum", async (req, res) => {
       const passNum = req.params.passNum;
       const result = await docsCollection.findOne({ passportNum: passNum });
@@ -283,6 +300,9 @@ async function run() {
       if (publicIds && publicIds.length > 0) {
         const deleteRes = await cloudinary.deleteFromCloud(publicIds);
         if (deleteRes[0].result == "ok") {
+          const userDelete = await userCollection.deleteOne({
+            passportNumber: result?.passportNum,
+          });
           const deletedResult = await docsCollection.deleteOne(query);
           res.status(200).json({
             success: true,

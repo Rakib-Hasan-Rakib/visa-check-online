@@ -7,6 +7,7 @@ import PrimaryResult from "../pages/result/PrimaryResult";
 import Login from "../pages/login/Login";
 import Home from "../pages/home/Home";
 import Contact from "../pages/contact/Contact";
+import Register from "../pages/register/Register";
 
 const Route = createBrowserRouter([
   {
@@ -27,6 +28,10 @@ const Route = createBrowserRouter([
       {
         path: "/login",
         element: <Login />,
+      },
+      {
+        path: "/register",
+        element: <Register />,
       },
     ],
   },

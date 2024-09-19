@@ -101,7 +101,6 @@ const PrimaryResult = () => {
       .finally(() => {
         setUpdateLoading(false);
       });
-    console.log(data);
   };
 
   return (

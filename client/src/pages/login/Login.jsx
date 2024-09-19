@@ -1,7 +1,7 @@
 import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Container from "../../components/Container";
 import toast from "react-hot-toast";
 import { AuthContext } from "../../providers/AuthProvider";
@@ -15,10 +15,8 @@ const Login = () => {
   const { signInWithGoogle, signIn } = useContext(AuthContext);
 
   const onSubmit = (data) => {
-    console.log(data);
     signIn(data?.email, data?.password)
-        .then((result) => {
-          console.log(result)
+      .then((result) => {
         navigate("/", { replace: true });
         toast.success("you logged in successfully");
       })
@@ -32,7 +30,6 @@ const Login = () => {
     signInWithGoogle()
       .then((result) => {
         navigate("/", { replace: true });
-        console.log(result);
         toast.success("you logged in successfully");
       })
       .catch((err) => {
@@ -115,6 +112,9 @@ const Login = () => {
 
             <p>Continue with Google</p>
           </div>
+        </div>
+        <div className="text-center">
+          Already have account? <Link to="/register" className="text-blue-600 underline">Register</Link>
         </div>
       </Container>
     </>

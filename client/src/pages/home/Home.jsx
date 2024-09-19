@@ -1,9 +1,15 @@
 import Banner from "./banner/Banner";
+import Featured from "./featured/Featured";
+import Scholarship from "./scholarship/Scholarship";
 
 const Home = () => {
   return (
     <>
-      <Banner />
+      <div className="space-y-2 lg:space-y-5">
+        <Banner />
+        <Featured />
+        <Scholarship />
+      </div>
     </>
   );
 };

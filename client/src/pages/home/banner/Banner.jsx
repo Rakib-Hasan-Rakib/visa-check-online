@@ -90,14 +90,14 @@ const Banner = () => {
         <SwiperSlide>
           <img
             className="banner_image w-full h-[100vh] object-cover -z-10 relative"
-            src="https://i.ibb.co.com/QrcyrF5/visa-one.jpg"
+            src="https://i.ibb.co.com/KGR8Vrv/visa-one.jpg"
           />
           {content}
         </SwiperSlide>
         <SwiperSlide>
           <img
             className="banner_image w-full h-[100vh] object-cover -z-10 relative"
-            src="https://i.ibb.co.com/mDN1zsL/visa-two.jpg"
+            src="https://i.ibb.co.com/sJSx9N2/visa-two.jpg"
           />
           {content}
         </SwiperSlide>

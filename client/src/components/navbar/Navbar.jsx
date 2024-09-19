@@ -3,6 +3,7 @@ import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import brandLogo from "../../assets/brand_icon.jpg";
 import { AuthContext } from "../../providers/AuthProvider";
+import avatar from "../../assets/avatar.jpg";
 
 const Navbar = () => {
   const [showMenu, setShowMenu] = useState(false);
@@ -91,13 +92,19 @@ const Navbar = () => {
           <ul className="menu menu-horizontal px-1 flex justify-between gap-4 lg:gap-6 xl:gap-8 2xl:gap-10 items-center">
             {MenuItem}
           </ul>
-            {user && (
-              <img
-                src={user?.photoURL}
-                alt="user photo"
-                className="w-12 h-12 rounded-full"
-              />
-            )}
+          {user ? (
+            <img
+              src={user?.photoURL}
+              alt="user photo"
+              className="w-12 h-12 rounded-full"
+            />
+          ) : (
+            <img
+              src={avatar}
+              alt="user photo"
+              className="w-12 h-12 rounded-full"
+            />
+          )}
         </div>
       </div>
     </>

@@ -8,6 +8,7 @@ import { ImSpinner9 } from "react-icons/im";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import brandLogo from "../../assets/brand_icon.jpg"
+import Container from "../../components/Container";
 
 const Check = () => {
   const [showPass, setShowPass] = useState(false);
@@ -39,7 +40,7 @@ const Check = () => {
 
   return (
     <>
-      <div>
+      <Container>
         <div className="bg-blue-600 w-full py-4 lg:py-8 flex flex-col items-center">
           <img
             src={brandLogo}
@@ -129,7 +130,7 @@ const Check = () => {
             Experienced Lawyers
           </p>
         </div>
-      </div>
+      </Container>
     </>
   );
 };

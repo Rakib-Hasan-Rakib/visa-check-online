@@ -1,0 +1,9 @@
+.scholarship_sect {
+    background-image: url('../../../assets/book.jpg');
+    height: auto;
+    width: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+}

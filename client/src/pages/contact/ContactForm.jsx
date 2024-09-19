@@ -1,33 +1,10 @@
-import { useRef } from "react";
 import { useForm } from "react-hook-form";
-// import emailjs from "@emailjs/browser";
 
 const ContactForm = () => {
-  const form = useRef();
   const { register, handleSubmit, reset } = useForm();
   const onSubmit = (data) => {
     console.log(data);
-  };
-
-  const sendEmail = (e) => {
-    e.preventDefault();
-
-    // emailjs
-    //   .sendForm(
-    //     "service_5w04vhh",
-    //     "template_2a4uzsc",
-    //     form.current,
-    //     "B3LwMq8Mp7dvEUPpS"
-    //   )
-    //   .then(
-    //     (result) => {
-    //       console.log(result);
-    //     },
-    //     (error) => {
-    //       console.log(error.text);
-    //     }
-    //   );
-    // e.target.reset();
+    reset();
   };
 
   return (
