@@ -107,8 +107,8 @@ const PrimaryResult = () => {
     <>
       <Container>
         <h1 className="section_title">visa authorise</h1>
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
-          <div className="md:col-span-2 capitalize">
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6 p-4 rounded-md bg-gradient-to-r from-violet-500 to-fuchsia-500">
+          <div className="md:col-span-2 capitalize text-white">
             <p>
               <span className="data_key">Name :</span> {givenName} {surname}
             </p>

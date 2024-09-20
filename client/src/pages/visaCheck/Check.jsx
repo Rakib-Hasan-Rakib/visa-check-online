@@ -9,6 +9,7 @@ import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import brandLogo from "../../assets/brand_icon.jpg"
 import Container from "../../components/Container";
+import './check.css'
 
 const Check = () => {
   const [showPass, setShowPass] = useState(false);
@@ -52,7 +53,7 @@ const Check = () => {
             Experienced Lawyers
           </p>
         </div>
-        <div className="w-full bg-gry-400 flex flex-col lg:flex-row-reverse items-center gap-4 lg:gap-8 my-4 lg:my-6">
+        <div className="custom w-full bg-gry-400 flex flex-col lg:flex-row-reverse items-center gap-4 lg:gap-8 my-4 lg:my-6">
           <Lottie
             animationData={loginAnim}
             loop={true}
@@ -67,7 +68,7 @@ const Check = () => {
               className="space-y-1 lg:space-y-4"
             >
               <div>
-                <label className="md:text-lg">
+                <label className="md:text-lg text-white font-semibold">
                   Passport Number<span className="text-red-600">*</span>
                 </label>
                 <input
@@ -77,7 +78,7 @@ const Check = () => {
                 />
               </div>
               <div className="relative">
-                <label className="md:text-lg">
+                <label className="md:text-lg text-white font-semibold">
                   Password<span className="text-red-600">*</span>
                 </label>
                 <input

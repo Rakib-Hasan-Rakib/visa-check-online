@@ -55,7 +55,6 @@ const Scholarship = () => {
                   className="w-16 lg:w-28 h-auto object-cover object-center"
                 />
               </div>
-              <p>Validity From : 20 sept 2024 - 25 Jan 2025</p>
               <button className="btn_one">Apply Now</button>
             </motion.div>
           </div>

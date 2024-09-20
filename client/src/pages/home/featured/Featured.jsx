@@ -23,7 +23,7 @@ const Featured = () => {
 
           <div className="grid md:gird-cols-2 lg:grid-cols-4 gap-2 md:gap-4 lg:gap-6">
             {featuredArray?.map((data, i) => {
-              return <Card key={i} image={data?.image} title={data?.title} />;
+              return <Card key={i} image={data?.image} title={data?.title} index={i} />;
             })}
           </div>
         </div>
